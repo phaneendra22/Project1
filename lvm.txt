@@ -1,0 +1,24 @@
+pgndcvarap001.dc.gap.com
+pgndcvarap002.dc.gap.com
+pgndcvarap003.dc.gap.com
+pgndcvarap004.dc.gap.com
+pgndcvarap005.dc.gap.com
+pgndcvarap006.dc.gap.com
+pgndcvarap007.dc.gap.com
+pgndcvarap008.dc.gap.com
+pgndcvardb003.dc.gap.com
+eaok12srv08.dc.gap.com
+eaom12srv07.dc.gap.com
+eaom12srv09.dc.gap.com
+eaok12srv09.dc.gap.com
+
+ yum update -y --exclude=nrjmx*
+
+pgndcvarap001.dc.gap.com# lvextend -L 20G /dev/mapper/vg00-lvvar
+  Size of logical volume vg00/lvvar changed from 10.00 GiB (640 extents) to 20.00 GiB (1280 extents).
+  Logical volume vg00/lvvar successfully resized.
+pgndcvarap001.dc.gap.com# resize2fs /dev/mapper/vg00-lvvar
+resize2fs 1.45.4 (23-Sep-2019)
+Filesystem at /dev/mapper/vg00-lvvar is mounted on /var; on-line resizing required
+old_desc_blocks = 2, new_desc_blocks = 3
+The filesystem on /dev/mapper/vg00-lvvar is now 5242880 (4k) blocks long.

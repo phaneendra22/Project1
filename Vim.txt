@@ -1,0 +1,9 @@
+1. Write the new file to disk with: :w myfirstnovel.txt
+2. Change the word VIM to Vim by putting the cursor on the I and pressing cw to change the rest of the word to im.Navigate to the m in main and use the ~ character to change it to M
+3. Press A (not a) which enters Insert Mode, and moves you to the end of the line
+4. Go to the top of the file with gg
+5. Go to the bottom of the file with G
+6. Use /Vim, ENTER to find the first instance of Vim.Use n to go to the next and subsequent instances.Use N to go back to previous instances.Go to the bottom of the file using G and Use ?help to search backwards.
+7. Press o to add a line under the current line.
+8. Now undo your changes one at a time by pressing u. You'll tire quickly of this, so hold down the u key until all changes to the file are reversed.When you have reached the last undo possible, you will see the status line reflect with the text Already at oldest change
+9. Use ^ to go back to the front of the word, then 0 (zero) to go to the very beginning of the line.

@@ -1,0 +1,74 @@
+CUT Command:
+
+1.cut -c2 test.txt ==> The following example displays 2nd character from each line of a file test.txt
+2.cut -c1-3 test.txt   ==>The following example extracts first 3 characters of each line from a file called test.txt
+3.Command: cut -c3- test.txt  ==>This example extracts from 3rd character to end of each line from test.txt file.
+Command: cut -c-8 test.txt ==>This example extracts 8 characters from the beginning of each line from test.txt file.
+Command: cut -c- test.txt  ==>The entire line would get printed when you don’t specify a number before or after the ‘-‘ as shown below.
+4. cut -d':' -f1 /etc/passwd ==>The following example displays only first field of each lines from /etc/passwd file using the field delimiter : (colon).
+5. grep "/bin/bash" /etc/passwd | cut -d':' -f1,6 ==>Below example displays username and home directory of users who has the login shell as “/bin/bash”.
+   grep "/bin/bash" /etc/passwd | cut -d':' -f1-4,6,7  ==>In this example, we are selecting field 1 through 4, 6 and 7
+6. grep "/bin/bash" /etc/passwd | cut -d'|'  -f1 ==>we’ve specified the delimiter as | (pipe), and cut command simply displays the whole line, even when it doesn’t find any line that has | (pipe) as delimiter.
+grep "/bin/bash" /etc/passwd | cut -d'|' -s -f1 ==>The following example doesn’t display any output, as the cut command didn’t find any lines that has | (pipe) as delimiter in the /etc/passwd file.
+7.grep "/bin/bash" /etc/passwd | cut -d':' --complement -s -f7 ==>The following example displays all the fields from /etc/passwd file except field 7
+8. To change the output delimiter use the option –output-delimiter as shown below. In this example, the input delimiter is : (colon), but the output delimiter is # (hash).
+Command: grep "/bin/bash" /etc/passwd | cut -d':'  -s -f1,6,7 --output-delimiter='#'
+9. Change Output Delimiter to Newline
+In this example, each and every field of the cut command output is displayed in a separate line. We still used –output-delimiter, but the value is $’\n’ which indicates that we should add a newline as the output delimiter.
+grep bala /etc/passwd | cut -d':' -f1,6,7 --output-delimiter=$'\n'
+10. Combine Cut with Other Unix Command Output
+Command: ps axu | grep python | sed 's/\s\+/ /g' | cut -d' ' -f2,11-
+
+
+AWK Command#################################################################################################################################################
+
+
+ 1. awk '{ print $0 }' grep.test.txt - prints each line in its entirety
+ 2. awk '{ print $1 }' grep.test.txt - prints column #1 from each line
+ 3. awk '{ print $2 }' grep.test.txt - prints column #2 from each line
+ 4. awk '{ print $2,$1 }' grep.test.txt - prints column #1 then #2
+ 5. awk '/Red/ { print $0}' grep.test.txt - prints ALL columns where line includes 'Red'
+ 6. awk '/Red/ { print $1,"-",$2,"-",$3}' grep.test.txt - prints ALL columns, with transformations, where line includes 'Red'
+ 7. awk '{ if ($2 ~ /2011/) print $0 }' grep.test.txt - prints ALL columns of records containing '2011' in the second column
+ 8. awk '/2011$/ { print $0 }' grep.test.txt - prints lines ending in: '2011'
+ 9. awk '/2011$/ { print $0 }' - waits on STDIN for input
+10. grep 2011 /var/log/messages | awk '/2011$/ { print $0 }' - accepts a pipe
+11. awk '{ if ($2 ~ /9/) print $3,$4,$5,$6 }' /var/log/messages - prints columns $3-$6 where colum 2 = '9'
+
+
+
+Sort Command################################################################################################################################################
+
+
+1. sort simply sorts the file in alphabetical order: sort filename
+2. sort removes the duplicates using the -u option:   sort -u filename
+3. To sort a file numericallly: sort -n filename
+4. sort file numerically in reverse order: sort -nr filename
+5. sort can sort multiple files as well: sort -n file1 file2
+6.Files with multiple fields and delimiter: sort -t"," -k1,1 filename    sort -t"," -k2,2 file
+7.Sort the contents of file ‘lsl.txt‘ on the basis of 9th column: sort -k9 lsl.txt       ls -l /home/$USER | sort -nk5
+8.Sort the output of ‘ls -l‘ command on the basis of field 2,5 (Numeric) and 9 (Non-Numeric) ls -l /home/$USER | sort -t "," -nk2,5 -k9
+
+
+Sed Command#################################################################################################################################################
+
+ 1. 'sed -n '1p' grep.test.txt ' - prints the first line of the file
+ 2. 'sed -n '2p' grep.test.txt ' - prints the second line ...
+ 3. 'sed -n '$p' grep.test.txt ' - prints the last line ...
+ 4. 'sed -n 4,13p grep.test.txt ' - prints lines 4 - 13 ...
+ 5. 'sed -n '1!p' grep.test.txt ' - prints ALL but line 1
+ 6. 'sed -n '1,3!p' grep.test.txt ' - prints ALL but lines 1-3
+ 7. 'sed -n -e '/2011/p' grep.test.txt ' - prints lines containing '2011'
+ 8. 'sed -n -e '/2011$/p' grep.test.txt ' - prints lines ending with '2011'
+ 9. 'sed -n -e '/^2011/p' grep.test.txt ' - prints lines beginning with '2011'
+10. 'sed -n -e '/^2011$/p' grep.test.txt ' - prints lines starting & ending with '2011'
+11. 'sed -n -e '/[0-9]/p' grep.test.txt - prints lines containing numbers
+12. 'sed -n -e '/^[0-9][0-9][0-9][0-9]$/p' grep.test.txt' - prints lines containing 4 juxtaposed numbers
+13. 'sed -n -e '/^[0-9]\{4\}$/p' grep.test.txt ' - returns lines containing 4 juxtaposed numbers that begin and end the line
+14. 'sed -n -e '/^Red/,/Linux/p' grep.test.txt - extracts a range of lines from string: '^Red' to 'Linux'
+15. 'sed -n -e '/^Red/,+2p' grep.test.txt' - extracts line with 'Red' and 2 others
+16. 'sed -e '/^$/d' grep.test.txt' - deletes blank lines
+17. 'sed -e '/^$/d' grep.test.txt > grep.test.txt2' - deletes blank lines and saves results
+18. 'sed -i.bak -e '/^$/d' grep.test.txt' - deletes blank lines in-place and archives original(source) file
+19. 'sed -n -e 's/2010/2011/p' grep.test.txt '
+Note: '-n' suppresses non-matching lines
